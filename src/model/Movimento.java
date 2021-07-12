@@ -1,6 +1,6 @@
 package model;
 
-public class Veiculo {
+public class Movimento {
 		
 		private String codigo;
 		private String placa;

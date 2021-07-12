@@ -21,7 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import dao.MovimentoDao;
-import model.Veiculo;
+import model.Movimento;
 import util.Util;
 
 public class FrameEstacionamento {
@@ -77,7 +77,6 @@ public class FrameEstacionamento {
 		labelEntrada.setBounds(30, 10, 130, 30);
         labelEntrada.setFont(new Font("Arial", Font.BOLD, 16));
 		labelEntrada.setForeground(corLetra);
-
 		
 		labelPlacaEntrada = new JLabel ("PLACA: ");
 	    labelPlacaEntrada.setBounds(30, 40, 130, 30);
@@ -85,7 +84,7 @@ public class FrameEstacionamento {
 		textPlacaEntrada = new JTextField();
 		textPlacaEntrada.setBounds(25, 75, 215, 30);
 		textPlacaEntrada.setForeground(corLetra);
-		textPlacaEntrada.setFont(new Font("Arial", Font.BOLD, 18));
+		textPlacaEntrada.setFont(new Font("Arial", Font.BOLD, 16));
 
 		labelModeloEntrada = new JLabel ("MODELO: ");
 		labelModeloEntrada.setBounds(260, 40, 130, 30);
@@ -93,7 +92,7 @@ public class FrameEstacionamento {
 		textModeloEntrada = new JTextField();
 		textModeloEntrada.setBounds(253, 75, 215, 30);
 		textModeloEntrada.setForeground(corLetra);
-		textModeloEntrada.setFont(new Font("Arial", Font.BOLD, 18));
+		textModeloEntrada.setFont(new Font("Arial", Font.BOLD, 16));
 
 		buttonEntrar = new JButton ("ENTRAR");
 		buttonEntrar.setBounds(480, 75, 150, 30);
@@ -112,7 +111,7 @@ public class FrameEstacionamento {
 		textPlacaSaida = new JTextField();
 		textPlacaSaida.setBounds(25, 375, 100, 30);
 		textPlacaSaida.setForeground(corLetra);
-		textPlacaSaida.setFont(new Font("Arial", Font.BOLD, 18));
+		textPlacaSaida.setFont(new Font("Arial", Font.BOLD, 16));
 
 		buttonBuscar = new JButton ("BUSCAR");
 		buttonBuscar.setBounds(130, 375, 100, 30);
@@ -125,42 +124,42 @@ public class FrameEstacionamento {
 	    textModeloSaida = new JTextField();
 	    textModeloSaida.setBounds(25, 445, 100, 30);
 	    textModeloSaida.setForeground(corLetra);
-		textModeloSaida.setFont(new Font("Arial", Font.BOLD, 18));
+		textModeloSaida.setFont(new Font("Arial", Font.BOLD, 16));
 
         labelDataEntrada = new JLabel("Data Entrada: ");
         labelDataEntrada.setBounds(130, 410, 150, 30);
         textDataEntrada = new JTextField();
         textDataEntrada.setBounds(135, 445, 100, 30);
         textDataEntrada.setForeground(corLetra);
-		textDataEntrada.setFont(new Font("Arial", Font.BOLD, 18));
+		textDataEntrada.setFont(new Font("Arial", Font.BOLD, 16));
 
         labelHoraEntrada = new JLabel("Hora Entrada: ");
         labelHoraEntrada.setBounds(240, 410, 110, 30);
         textHoraEntrada = new JTextField();
         textHoraEntrada.setBounds(245, 445, 100, 30);
         textHoraEntrada.setForeground(corLetra);
-		textHoraEntrada.setFont(new Font("Arial", Font.BOLD, 18));
+		textHoraEntrada.setFont(new Font("Arial", Font.BOLD, 16));
     
         labelDataSaida = new JLabel("Data saída: ");
         labelDataSaida.setBounds(350, 410, 70, 30);
         textDataSaida = new JTextField();
         textDataSaida.setBounds(355, 445, 100, 30);
         textDataSaida.setForeground(corLetra);
-		textDataSaida.setFont(new Font("Arial", Font.BOLD, 18));
+		textDataSaida.setFont(new Font("Arial", Font.BOLD, 16));
         
         labelHoraSaida = new JLabel("Hora saída: ");
         labelHoraSaida.setBounds(460, 410, 70, 30);
         textHoraSaida = new JTextField();
         textHoraSaida.setBounds(465, 445, 100, 30);
         textHoraSaida.setForeground(corLetra);
-		textHoraSaida.setFont(new Font("Arial", Font.BOLD, 18));
+		textHoraSaida.setFont(new Font("Arial", Font.BOLD, 16));
 
         labelTempo = new JLabel("Tempo: ");
         labelTempo.setBounds(570, 410, 70, 30);
         textTempo = new JTextField();
         textTempo.setBounds(570, 445, 55, 30);
         textTempo.setForeground(corLetra);
-		textTempo.setFont(new Font("Arial", Font.BOLD, 18));
+		textTempo.setFont(new Font("Arial", Font.BOLD, 16));
 
         labelValorPagar = new JLabel("VALOR A PAGAR: ");
         labelValorPagar.setBounds(30, 500, 100, 30);
@@ -174,13 +173,11 @@ public class FrameEstacionamento {
 		buttonEfetuarSaida.setBackground(corButton);
 		//buttonEfetuarSaida.setFont(new Font("Arial", Font.BOLD, 18));
 		buttonEfetuarSaida.setForeground(Color.WHITE);
-
 		
 		buttonFecharSistema = new JButton ("FECHAR SISTEMA");
 		buttonFecharSistema.setBounds(460, 495, 160, 45);
 		buttonFecharSistema.setBackground(corButtonFechar);
 		buttonFecharSistema.setForeground(Color.WHITE);
-		
 		
         tela.getContentPane().add(labelEntrada);
 		tela.getContentPane().add(labelPlacaEntrada);
@@ -218,50 +215,71 @@ public class FrameEstacionamento {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarFormulario()) {
-					Veiculo movimento = new Veiculo();
-					movimento.setCodigo(Util.gerarCodigo());
-					movimento.setPlaca(textPlacaEntrada.getText());
-					movimento.setModelo(textModeloEntrada.getText());
-					movimento.setDataEntrada(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-					movimento.setHoraEntrada(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+				
+				Movimento movimento = new Movimento();
+					
+				movimento.setCodigo(Util.gerarCodigo());
+				movimento.setPlaca(textPlacaEntrada.getText());
+				movimento.setModelo(textModeloEntrada.getText());
+				movimento.setDataEntrada(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				movimento.setHoraEntrada(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
 					
 					
-					MovimentoDao dao = new MovimentoDao(movimento);
-					dao.salvar();
+				MovimentoDao dao = new MovimentoDao(movimento);
+				dao.salvar();
 
-					JOptionPane.showMessageDialog(null, "Veiculo cadastrado com sucesso!!");
+				JOptionPane.showMessageDialog(null, "Veiculo cadastrado com sucesso!!");
 
-					validarFormulario();
+				validarFormulario();
 					
-					limparFormulario();
+				limparFormulario();
 					
-				} else {
-					JOptionPane.showMessageDialog(null, "Você deve preencher todos os campos!", "Atenção",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
 			}
 
+		 });
+		
+		 buttonBuscar.addActionListener(new ActionListener() {
+
+			  @Override
+	          public void actionPerformed(ActionEvent e) {
+	              String placa;
+	              placa = textPlacaSaida.getText().toUpperCase();
+	                
+	              MovimentoDao dao = new MovimentoDao();
+	              Movimento movimento = dao.buscarMovimento(placa);
+	                
+	              textModeloSaida.setText(movimento.getModelo());
+	              textDataEntrada.setText(movimento.getDataEntrada());
+	              textHoraEntrada.setText(movimento.getHoraEntrada());
+	              textDataSaida.setText(movimento.getDataSaida());
+	              textHoraSaida.setText(movimento.getHoraSaida());
+	          }
+	     });
+		
+		 buttonFecharSistema.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+				
+			}
 		});
-		
-		
 		
 		tableTabelaVeiculos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				
-				String codigo;
+				String placa;
 				int linha = tableTabelaVeiculos.getSelectedRow();
 				
-				codigo = tableTabelaVeiculos.getModel().getValueAt(linha, 0).toString();
+				placa = tableTabelaVeiculos.getModel().getValueAt(linha, 1).toString();
 				
 				MovimentoDao dao = new MovimentoDao();
-				Veiculo cliente = dao.buscarMovimento(codigo);
+				Movimento veiculo = dao.buscarMovimento(placa);
 				
-				textPlacaEntrada.setText(cliente.getPlaca());
-				textModeloEntrada.setText(cliente.getModelo());				
+				textPlacaEntrada.setText(veiculo.getPlaca());
+				textModeloEntrada.setText(veiculo.getModelo());				
 				
 			}
 		});
@@ -281,16 +299,18 @@ public class FrameEstacionamento {
 			// Vetor que representa cada linha da tabela
 			            
 			MovimentoDao veiculosDao = new MovimentoDao();
-			ArrayList<Veiculo> veiculos = veiculosDao.listarMovimentos();
+			ArrayList<Movimento> veiculos = veiculosDao.listarMovimentos();
 
-			for (Veiculo veiculo : veiculos) {
-			String[] vetorMovimento = { veiculo.getCodigo(), veiculo.getPlaca(), veiculo.getModelo(), veiculo.getDataEntrada() };
-		    tabelaEstacionamentoModelo.addRow(vetorMovimento);         
+			for (Movimento veiculo : veiculos) {
+			String[] vetorMovimento = { veiculo.getCodigo(), veiculo.getPlaca(), 
+					veiculo.getModelo(), veiculo.getDataEntrada() };
+		    
+			tabelaEstacionamentoModelo.addRow(vetorMovimento);         
 			}
 			            
 			// Passo 2 - Criar a Tabela
 			            
-			JTable tableTabelaVeiculos = new JTable(tabelaEstacionamentoModelo);
+			tableTabelaVeiculos = new JTable(tabelaEstacionamentoModelo);
 			            
 			// Determinar a largura das colunas 
 			            
@@ -304,12 +324,11 @@ public class FrameEstacionamento {
 			// Passo 3 - Colocar painel de rolagem na tabela (Scroll)
 			            
 			scrollTable = new JScrollPane (tableTabelaVeiculos);
-			scrollTable.setBounds(25, 120, 609, 190);
+			scrollTable.setBounds(25, 120, 609, 182);
 			
 			tela.getContentPane().add(scrollTable);
 			
 	}
-	
 	
 	private void limparFormulario() {
 		textPlacaEntrada.setText("");
